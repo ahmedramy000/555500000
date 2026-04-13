@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATAL_ERROR_0x00129</title>
+    <style>
+        body { background-color: #000; color: #ff0000; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        #matrix-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
+        .terminal { background: rgba(10, 0, 0, 0.95); border: 1px solid #ff0000; padding: 20px; width: 90%; max-width: 500px; box-shadow: 0 0 40px #500000; position: relative; z-index: 10; }
+        .glitch { animation: glitch 0.2s infinite; text-shadow: 2px 0 #fff; }
+        @keyframes glitch { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
+        .data-log { color: #00ff41; font-size: 0.8em; margin: 10px 0; direction: ltr; text-align: left; display: none; border-left: 2px solid #ff0000; padding-left: 10px; }
+        .warning-header { color: #ff0000; font-weight: bold; font-size: 1.2em; text-align: center; margin-bottom: 15px; }
+        #final-msg { margin-top: 20px; font-weight: bold; color: #fff; display: none; line-height: 1.6; }
+        .red-flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: red; opacity: 0; pointer-events: none; z-index: 100; }
+    </style>
+</head>
+<body>
+    <div class="red-flash" id="flash"></div>
+    <canvas id="matrix-bg"></canvas>
+    <div class="terminal">
+        <div class="warning-header glitch">INTERNAL_BREACH_DETECTED</div>
+        <div style="font-size: 0.7em; color: #aaa; text-align: center;">ROOT_USER: <span style="color: #00ff41;">LE_01011_X</span></div>
+        <hr border="1" color="#300">
+        
+        <div id="logs">
+            <div class="data-log" id="l1">> TARGET_OS: <span id="os"></span></div>
+            <div class="data-log" id="l2">> BROWSER_CORE: <span id="browser"></span></div>
+            <div class="data-log" id="l3">> SCREEN_SYNC: <span id="screen"></span></div>
+            <div class="data-log" id="l4">> HARDWARE_CORES: <span id="cpu"></span></div>
+            <div class="data-log" id="l5">> ENERGY_LEVEL: <span id="battery"></span></div>
+        </div>
+
+        <div id="final-msg">
+            <span style="color: #ff0000;">[SYSTEM]</span> بدأت ألاحظ علامات الكذب والتلاعب.. بس أنا <span style="color: #00ff41;">PLAYER TYPE</span>.. (وهنا تبدأ المتعة)
+        </div>
+    </div>
+
+    <script>
+        // Matrix BG
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const letters = "0101LE_01011_X"; const fontSize = 15;
+        const columns = canvas.width / fontSize; const drops = [];
+        for (let i = 0; i < columns; i++) drops[i] = 1;
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#f00'; ctx.font = fontSize + 'px arial';
+            for (let i = 0; i < drops.length; i++) {
+                ctx.fillText(letters[Math.floor(Math.random() * letters.length)], i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 35);
+
+        window.onload = async function() {
+            // معلومات الضحية
+            document.getElementById('os').innerText = navigator.platform;
+            document.getElementById('browser').innerText = navigator.vendor || "Unknown Engine";
+            document.getElementById('screen').innerText = `${window.screen.width}x${window.screen.height}`;
+            document.getElementById('cpu').innerText = `${navigator.hardwareConcurrency || 'N/A'} Threads`;
+            if (navigator.getBattery) {
+                const b = await navigator.getBattery();
+                document.getElementById('battery').innerText = `${Math.round(b.level * 100)}%`;
+            }
+
+            // تسلسل الرعب
+            let delay = 1000;
+            for(let i=1; i<=5; i++) {
+                setTimeout(() => { 
+                    document.getElementById('l'+i).style.display = 'block';
+                    if(i%2==0) flashRed();
+                }, delay);
+                delay += 800;
+            }
+
+            setTimeout(() => {
+                document.getElementById('final-msg').style.display = 'block';
+                if (navigator.vibrate) navigator.vibrate([200, 100, 200]); // اهتزاز الموبايل
+                setInterval(flashRed, 3000);
+            }, delay + 500);
+        };
+
+        function flashRed() {
+            const f = document.getElementById('flash');
+            f.style.opacity = '0.3';
+            setTimeout(() => f.style.opacity = '0', 100);
+        }
+    </script>
+</body>
+</html>
