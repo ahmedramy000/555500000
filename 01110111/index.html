@@ -10,9 +10,9 @@
 
     <div id="start-overlay">
         <div style="padding: 20px;">
-            <h1 style="color:red; font-size: 2em;">⚠️ WARNING ⚠️</h1>
-            <p style="color:#ccc;">Unusual activity detected from your IP.<br>Verification required to secure your data.</p>
-            <button onclick="initiateHack()" style="padding: 15px 40px; background: red; color: #fff; font-size: 1.2em; border:none; cursor:pointer;">VERIFY NOW</button>
+            <h1 style="color:red; font-size: 2em; animation: blink 0.5s infinite;">⚠️ WARNING ⚠️</h1>
+            <p style="color:#ccc;">تم اكتشاف نشاط مشبوه من عنوان الـ IP الخاص بك.<br>يرجى التحقق من الهوية فوراً لمنع تشفير ملفاتك.</p>
+            <button onclick="initiateHack()" style="padding: 15px 40px; background: red; color: #fff; font-size: 1.2em; border:none; cursor:pointer; font-weight:bold;">التحقق الآن</button>
         </div>
     </div>
 
@@ -20,8 +20,8 @@
 
     <div class="terminal">
         <div class="danger-header">ESTABLISHING REMOTE CONNECTION...</div>
-        <p>> PROTOCOL: <span style="color:#fff;">LE_01011_X</span></p>
-        <p>> TARGET_IP: <span id="user-ip" style="color:yellow;">TRACKING...</span></p>
+        <p style="font-size: 12px;">> PROTOCOL: <span style="color:#fff;">LE_01011_X</span></p>
+        <p style="font-size: 12px;">> TARGET_IP: <span id="user-ip" style="color:yellow;">TRACKING...</span></p>
         <hr color="#222">
         
         <div class="log-box" id="wipe-log">
@@ -29,14 +29,27 @@
             [SYSTEM]: Initializing camera feed...<br>
         </div>
 
-        <p style="font-size: 12px; color: #fff;">"I am a PLAYER TYPE.. (The fun begins)"</p>
+        <p style="font-size: 13px; color: #fff; text-align: center; margin: 15px 0;">"I am a PLAYER TYPE.. (The fun begins)"</p>
         
-        <div style="margin-top: 20px;">
-            <input type="text" id="passkey" placeholder="BYPASS_KEY">
+        <div style="margin-top: 20px; text-align: center;">
+            <input type="text" id="passkey" placeholder="ادخل كود الإيقاف" style="width: 60%;">
             <button onclick="checkFinalExit()">EXIT</button>
         </div>
     </div>
 
     <script src="script.js"></script>
-    </body>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69dd8a5f9876721c73f83606/1jm4m919d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    
+</body>
 </html>
